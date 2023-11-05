@@ -1,0 +1,207 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://HUD.gd" type="Script" id=1]
+[ext_resource path="res://assets/fonts/liberation-serif/LiberationSerif-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/graphical/painting.png" type="Texture" id=3]
+[ext_resource path="res://assets/fonts/liberation-serif/LiberationSerif-Bold.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://assets/audible/drop.wav" type="AudioStream" id=6]
+[ext_resource path="res://ScoreAddonLabel.tscn" type="PackedScene" id=7]
+
+[sub_resource type="DynamicFont" id=12]
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 24
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=11]
+size = 24
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.666667, 0.490196, 0.254902, 1 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.666667, 0.490196, 0.254902, 1 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.666667, 0.490196, 0.254902, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.905882, 0.713726, 0.462745, 1 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.482353, 0.341176, 0.152941, 1 )
+
+[sub_resource type="InputEventAction" id=1]
+action = "start_game"
+
+[sub_resource type="ShortCut" id=2]
+shortcut = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=13]
+size = 32
+outline_size = 2
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=14]
+size = 12
+outline_color = Color( 0.176471, 0.298039, 0.0431373, 1 )
+font_data = ExtResource( 2 )
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource( 1 )
+addon_scene = ExtResource( 7 )
+
+[node name="ImageBackground" type="ColorRect" parent="."]
+margin_right = 480.0
+margin_bottom = 720.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="ImageNode" type="Node2D" parent="."]
+position = Vector2( 240, 320 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="TextureRect" type="TextureRect" parent="ImageNode"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -170.0
+margin_top = -220.0
+margin_right = -153.0
+margin_bottom = -198.0
+rect_scale = Vector2( 20, 20 )
+texture = ExtResource( 3 )
+
+[node name="ColorRect" type="ColorRect" parent="ImageNode"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -90.0
+margin_top = -140.0
+margin_right = 90.0
+margin_bottom = 140.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="Message" type="RichTextLabel" parent="ImageNode"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -90.0
+margin_top = -100.0
+margin_right = 90.0
+margin_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_colors/default_color = Color( 0.905882, 0.713726, 0.462745, 1 )
+custom_fonts/bold_italics_font = SubResource( 12 )
+custom_fonts/bold_font = SubResource( 10 )
+custom_fonts/normal_font = SubResource( 11 )
+bbcode_enabled = true
+bbcode_text = "[center][color=#7b5727]---––- ~*~ -––---[/color]
+[b]RUDOLPHIAN
+MARKET[/b]
+[color=#7b5727]---––- ~*~ -––---[/color]
+[b][i]Avoid what
+does not shine[/i][/b][/center]"
+text = "---––- ~*~ -––---
+RUDOLPHIAN
+MARKET
+---––- ~*~ -––---
+Avoid what
+does not shine"
+
+[node name="StartButton" type="Button" parent="ImageNode"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -40.0
+margin_top = 80.0
+margin_right = 40.0
+margin_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_colors/font_color_focus = Color( 0.905882, 0.713726, 0.462745, 1 )
+custom_colors/font_color = Color( 0.905882, 0.713726, 0.462745, 1 )
+custom_colors/font_color_hover = Color( 0.905882, 0.713726, 0.462745, 1 )
+custom_colors/font_color_pressed = Color( 0.905882, 0.713726, 0.462745, 1 )
+custom_fonts/font = SubResource( 4 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = SubResource( 9 )
+custom_styles/focus = SubResource( 8 )
+custom_styles/normal = SubResource( 5 )
+shortcut = SubResource( 2 )
+text = "Play"
+icon_align = 1
+
+[node name="ScoreLabel" type="Label" parent="."]
+visible = false
+anchor_right = 1.0
+margin_top = 9.0
+margin_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_colors/font_color = Color( 0.905882, 0.713726, 0.462745, 1 )
+custom_colors/font_outline_modulate = Color( 0.176471, 0.298039, 0.0431373, 1 )
+custom_fonts/font = SubResource( 13 )
+text = "0"
+align = 1
+
+[node name="CheckBox" type="CheckBox" parent="."]
+margin_left = 420.0
+margin_top = 677.0
+margin_right = 480.0
+margin_bottom = 701.0
+focus_mode = 0
+custom_colors/font_color = Color( 0.905882, 0.713726, 0.462745, 1 )
+custom_colors/font_color_hover = Color( 0.905882, 0.713726, 0.462745, 1 )
+custom_colors/font_color_pressed = Color( 0.905882, 0.713726, 0.462745, 1 )
+custom_fonts/font = SubResource( 14 )
+pressed = true
+enabled_focus_mode = 0
+text = "SFX"
+
+[node name="CheckBox2" type="CheckBox" parent="."]
+margin_left = 420.0
+margin_top = 696.0
+margin_right = 480.0
+margin_bottom = 720.0
+focus_mode = 0
+custom_colors/font_color = Color( 0.905882, 0.713726, 0.462745, 1 )
+custom_colors/font_color_hover = Color( 0.905882, 0.713726, 0.462745, 1 )
+custom_colors/font_color_pressed = Color( 0.905882, 0.713726, 0.462745, 1 )
+custom_fonts/font = SubResource( 14 )
+pressed = true
+enabled_focus_mode = 0
+text = "Music"
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="StartGameTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[node name="HighlightScoreTimer" type="Timer" parent="."]
+wait_time = 0.25
+
+[node name="DropAudio" type="AudioStreamPlayer" parent="." groups=["audio_sfx"]]
+stream = ExtResource( 6 )
+
+[connection signal="pressed" from="ImageNode/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="toggled" from="CheckBox" to="." method="_on_CheckBox_toggled"]
+[connection signal="toggled" from="CheckBox2" to="." method="_on_CheckBox2_toggled"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="StartGameTimer" to="." method="_on_StartGameTimer_timeout"]
+[connection signal="timeout" from="HighlightScoreTimer" to="." method="_on_HighlightScoreTimer_timeout"]

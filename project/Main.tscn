@@ -1,0 +1,95 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Main.gd" type="Script" id=1]
+[ext_resource path="res://Enemy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://HUD.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Extra.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/graphical/background.png" type="Texture" id=6]
+[ext_resource path="res://assets/audible/lost.wav" type="AudioStream" id=7]
+[ext_resource path="res://assets/audible/won.wav" type="AudioStream" id=8]
+[ext_resource path="res://assets/audible/new_enemy.wav" type="AudioStream" id=9]
+[ext_resource path="res://assets/audible/extra.wav" type="AudioStream" id=10]
+[ext_resource path="res://assets/audible/extra_plus.wav" type="AudioStream" id=11]
+[ext_resource path="res://assets/audible/bg_music_main.mp3" type="AudioStream" id=12]
+[ext_resource path="res://assets/audible/bg_music_intro.mp3" type="AudioStream" id=13]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 721 )
+}
+
+[sub_resource type="Curve2D" id=2]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 480, 0, 0, 0, 0, 0, 480, 721 )
+}
+
+[node name="Main" type="YSort"]
+script = ExtResource( 1 )
+enemy_scene = ExtResource( 2 )
+extra_scene = ExtResource( 5 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 6 )
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+visible = false
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="VPath" type="Path2D" parent="."]
+curve = SubResource( 1 )
+
+[node name="EnemyLocation" type="PathFollow2D" parent="VPath"]
+rotation = 1.5708
+
+[node name="VPath2" type="Path2D" parent="."]
+curve = SubResource( 2 )
+
+[node name="EnemyLocation" type="PathFollow2D" parent="VPath2"]
+position = Vector2( 480, 0 )
+rotation = 1.5708
+
+[node name="StartGameTimer" type="Timer" parent="."]
+wait_time = 1.85
+one_shot = true
+
+[node name="EnemyTimer" type="Timer" parent="."]
+wait_time = 1.85
+
+[node name="ScoreTimer" type="Timer" parent="."]
+wait_time = 1.85
+
+[node name="HUD" parent="." instance=ExtResource( 4 )]
+
+[node name="BgMusicIntro" type="AudioStreamPlayer" parent="." groups=["audio_music"]]
+stream = ExtResource( 13 )
+
+[node name="BgMusicMain" type="AudioStreamPlayer" parent="." groups=["audio_music"]]
+stream = ExtResource( 12 )
+
+[node name="NewMobSound" type="AudioStreamPlayer" parent="." groups=["audio_sfx"]]
+stream = ExtResource( 9 )
+
+[node name="WonSound" type="AudioStreamPlayer" parent="." groups=["audio_sfx"]]
+stream = ExtResource( 8 )
+
+[node name="LostSound" type="AudioStreamPlayer" parent="." groups=["audio_sfx"]]
+stream = ExtResource( 7 )
+
+[node name="ExtraSound" type="AudioStreamPlayer" parent="." groups=["audio_sfx"]]
+stream = ExtResource( 10 )
+
+[node name="ExtraPlusSound" type="AudioStreamPlayer" parent="." groups=["audio_sfx"]]
+stream = ExtResource( 11 )
+
+[connection signal="hit" from="Player" to="." method="_on_Player_hit"]
+[connection signal="pick" from="Player" to="." method="_on_Player_pick"]
+[connection signal="timeout" from="StartGameTimer" to="." method="_on_StartGameTimer_timeout"]
+[connection signal="timeout" from="EnemyTimer" to="." method="_on_EnemyTimer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]
+[connection signal="toggle_sfx" from="HUD" to="." method="_on_HUD_toggle_sfx"]
